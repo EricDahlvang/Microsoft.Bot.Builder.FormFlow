@@ -41,6 +41,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Resource;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
 {
@@ -183,7 +184,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
     /// <param name="state">State of the form.</param>
     /// <param name="field">Field being prompted or null if not a field.</param>
     /// <returns>Prompt that was posted.</returns>
-    public delegate Task<FormPrompt> PromptAsyncDelegate<T>(IDialogContext context, FormPrompt prompt, T state, IField<T> field)
+    public delegate Task<FormPrompt> PromptAsyncDelegate<T>(DialogContext context, FormPrompt prompt, T state, IField<T> field)
         where T : class;
 
     public static partial class Extensions

@@ -37,6 +37,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
@@ -44,6 +45,7 @@ using Microsoft.Bot.Builder.FormFlow.Advanced;
 using Microsoft.Bot.Builder.Internals.Fibers;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
 
 namespace Microsoft.Bot.Builder.FormFlow
 {
@@ -124,21 +126,21 @@ namespace Microsoft.Bot.Builder.FormFlow
     /// or <see cref="FormDialog.FromType{T}"/>. 
     /// </remarks>
     [Serializable]
-    public sealed class FormDialog<T> : IFormDialog<T>, ISerializable
+    public sealed class FormDialog<T> : ComponentDialog, IFormDialog<T>, ISerializable
         where T : class
     {
         // constructor arguments
-        private readonly T _state;
-        private readonly BuildFormDelegate<T> _buildForm;
-        private readonly IEnumerable<EntityRecommendation> _entities;
-        private readonly FormOptions _options;
+        private T _state;
+        private BuildFormDelegate<T> _buildForm;
+        private IEnumerable<EntityRecommendation> _entities;
+        private FormOptions _options;
 
         // instantiated in constructor, saved when serialized
-        private readonly FormState _formState;
+        private FormState _formState;
 
         // instantiated in constructor, re-instantiated when deserialized
-        private readonly IForm<T> _form;
-        private readonly IField<T> _commands;
+        private IForm<T> _form;
+        private IField<T> _commands;
 
         internal T State => _state;
 
@@ -157,7 +159,8 @@ namespace Microsoft.Bot.Builder.FormFlow
         /// <remarks>For building forms <see cref="IFormBuilder{T}"/>.</remarks>
         #endregion
         public FormDialog(T state, BuildFormDelegate<T> buildForm = null, FormOptions options = FormOptions.None, IEnumerable<EntityRecommendation> entities = null, CultureInfo cultureInfo = null)
-        {
+			:base(typeof(T).Name)
+		{
             buildForm = buildForm ?? BuildDefaultForm;
             entities = entities ?? Enumerable.Empty<EntityRecommendation>();
             if (cultureInfo != null)
@@ -184,7 +187,8 @@ namespace Microsoft.Bot.Builder.FormFlow
         }
 
         private FormDialog(SerializationInfo info, StreamingContext context)
-        {
+			: base(typeof(T).Name)
+		{
             // constructor arguments
             SetField.NotNullFrom(out this._state, nameof(this._state), info);
             SetField.NotNullFrom(out this._buildForm, nameof(this._buildForm), info);
@@ -215,47 +219,58 @@ namespace Microsoft.Bot.Builder.FormFlow
 
         IForm<T> IFormDialog<T>.Form { get { return this._form; } }
 
-        #endregion
+		#endregion
 
-        #region IDialog implementation
-        async Task IDialog<T>.StartAsync(IDialogContext context)
-        {
-            if (this._entities.Any())
-            {
-                var inputs = new List<Tuple<int, string>>();
-                var entityGroups = (from entity in this._entities group entity by entity.Role ?? entity.Type);
-                foreach (var entityGroup in entityGroups)
-                {
-                    var step = _form.Step(entityGroup.Key);
-                    if (step != null)
-                    {
-                        var builder = new StringBuilder();
-                        var first = true;
-                        foreach (var entity in entityGroup)
-                        {
-                            if (first)
-                            {
-                                first = false;
-                            }
-                            else
-                            {
-                                builder.Append(' ');
-                            }
-                            builder.Append(entity.Entity);
-                        }
-                        inputs.Add(Tuple.Create(_form.StepIndex(step), builder.ToString()));
-                    }
-                }
-                if (inputs.Any())
-                {
-                    // Descending because last entry is first processed
-                    _formState.FieldInputs = (from input in inputs orderby input.Item1 descending select input).ToList();
-                }
-            }
-            await SkipSteps();
-            _formState.Step = 0;
-            _formState.StepState = null;
+		#region ComponentDialog implementation
 
+		public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext outerDc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (this._entities.Any())
+			{
+				var inputs = new List<Tuple<int, string>>();
+				var entityGroups = (from entity in this._entities group entity by entity.Role ?? entity.Type);
+				foreach (var entityGroup in entityGroups)
+				{
+					var step = _form.Step(entityGroup.Key);
+					if (step != null)
+					{
+						var builder = new StringBuilder();
+						var first = true;
+						foreach (var entity in entityGroup)
+						{
+							if (first)
+							{
+								first = false;
+							}
+							else
+							{
+								builder.Append(' ');
+							}
+							builder.Append(entity.Entity);
+						}
+						inputs.Add(Tuple.Create(_form.StepIndex(step), builder.ToString()));
+					}
+				}
+				if (inputs.Any())
+				{
+					// Descending because last entry is first processed
+					_formState.FieldInputs = (from input in inputs orderby input.Item1 descending select input).ToList();
+				}
+			}
+			await SkipSteps();
+			_formState.Step = 0;
+			_formState.StepState = null;
+
+			//var result = await base.BeginDialogAsync(outerDc, options, cancellationToken);
+			var result = await MessageReceived(outerDc, outerDc.Context.Activity);
+
+			outerDc.ActiveDialog.State[nameof(_state)] = _state;
+			outerDc.ActiveDialog.State[nameof(_entities)] = _entities;
+			outerDc.ActiveDialog.State[nameof(_options)] = _options;
+			outerDc.ActiveDialog.State[nameof(_formState)] = _formState;
+
+			return result;
+			/*
             if (this._options.HasFlag(FormOptions.PromptInStart))
             {
                 await MessageReceived(context, null);
@@ -264,255 +279,278 @@ namespace Microsoft.Bot.Builder.FormFlow
             {
                 context.Wait(MessageReceived);
             }
-        }
+            */
+		}
+		public async override Task<DialogTurnResult> ContinueDialogAsync(DialogContext outerDc, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (outerDc == null)
+			{
+				throw new ArgumentNullException(nameof(outerDc));
+			}
 
-        public async Task MessageReceived(IDialogContext context, IAwaitable<Connector.IMessageActivity> toBot)
-        {
-            try
-            {
-                var message = toBot == null ? null : await toBot;
+			// Continue execution of inner dialog.
+			_state = (T)outerDc.ActiveDialog.State[nameof(_state)];
+			_entities = (IEnumerable<EntityRecommendation>)outerDc.ActiveDialog.State[nameof(_entities)];
+			_options = (FormOptions)outerDc.ActiveDialog.State[nameof(_options)];
+			_formState = (FormState)outerDc.ActiveDialog.State[nameof(_formState)];
 
-                // Ensure we have initial definition for field steps
-                foreach (var step in _form.Steps)
-                {
-                    if (step.Type == StepType.Field && step.Field.Prompt == null)
-                    {
-                        await step.DefineAsync(_state);
-                    }
-                }
+			var form = _buildForm();
+			this._form = form;
+			this._commands = this._form.BuildCommandRecognizer();
 
-                var next = (_formState.Next == null ? new NextStep() : ActiveSteps(_formState.Next, _state));
-                bool waitForMessage = false;
-                FormPrompt lastPrompt = _formState.LastPrompt;
+			var result = await MessageReceived(outerDc, outerDc.Context.Activity);
 
-                Func<FormPrompt, IStep<T>, Task<FormPrompt>> PostAsync = async (prompt, step) =>
-                {
-                    return await _form.Prompt(context, prompt, _state, step.Field);
-                };
+			return result;
+		}
+		public async Task<DialogTurnResult> MessageReceived(DialogContext context, IMessageActivity message)
+		{
+			try
+			{
+				// Ensure we have initial definition for field steps
+				foreach (var step in _form.Steps)
+				{
+					if (step.Type == StepType.Field && step.Field.Prompt == null)
+					{
+						await step.DefineAsync(_state);
+					}
+				}
 
-                Func<IStep<T>, IEnumerable<TermMatch>, Task<bool>> DoStepAsync = async (step, matches) =>
-                {
-                    var result = await step.ProcessAsync(context, _state, _formState, message, matches);
-                    await SkipSteps();
-                    next = result.Next;
-                    if (result.Feedback?.Prompt != null)
-                    {
-                        await PostAsync(result.Feedback, step);
-                        if (_formState.Phase() != StepPhase.Completed)
-                        {
-                            if (!_formState.ProcessInputs)
-                            {
-                                await PostAsync(lastPrompt, step);
-                                waitForMessage = true;
-                            }
-                            else if (result.Prompt?.Buttons != null)
-                            {
-                                // We showed buttons so allow them to be pressed
-                                waitForMessage = true;
-                            }
-                            else
-                            {
-                                // After simple feedback, reset to ready
-                                _formState.SetPhase(StepPhase.Ready);
-                            }
-                        }
-                    }
+				var next = (_formState.Next == null ? new NextStep() : ActiveSteps(_formState.Next, _state));
+				bool waitForMessage = false;
+				FormPrompt lastPrompt = _formState.LastPrompt;
 
-                    if (result.Prompt != null)
-                    {
-                        lastPrompt = await PostAsync(result.Prompt, step);
-                        waitForMessage = true;
-                    }
+				Func<FormPrompt, IStep<T>, Task<FormPrompt>> PostAsync = async (prompt, step) =>
+				{
+					return await _form.Prompt(context, prompt, _state, step.Field);
+				};
 
-                    return true;
-                };
+				Func<IStep<T>, IEnumerable<TermMatch>, Task<bool>> DoStepAsync = async (step, matches) =>
+				{
+					var result = await step.ProcessAsync(context, _state, _formState, message, matches);
+					await SkipSteps();
+					next = result.Next;
+					if (result.Feedback?.Prompt != null)
+					{
+						await PostAsync(result.Feedback, step);
+						if (_formState.Phase() != StepPhase.Completed)
+						{
+							if (!_formState.ProcessInputs)
+							{
+								await PostAsync(lastPrompt, step);
+								waitForMessage = true;
+							}
+							else if (result.Prompt?.Buttons != null)
+							{
+								// We showed buttons so allow them to be pressed
+								waitForMessage = true;
+							}
+							else
+							{
+								// After simple feedback, reset to ready
+								_formState.SetPhase(StepPhase.Ready);
+							}
+						}
+					}
 
-                while (!waitForMessage && MoveToNext(next))
-                {
-                    IStep<T> step = null;
-                    IEnumerable<TermMatch> matches = null;
-                    if (next.Direction == StepDirection.Named && next.Names.Length > 1)
-                    {
-                        // We need to choose between multiple next steps
-                        bool start = (_formState.Next == null);
-                        _formState.Next = next;
-                        step = new NavigationStep<T>(_form.Steps[_formState.Step].Name, _form, _state, _formState);
-                        if (start)
-                        {
-                            lastPrompt = await PostAsync(step.Start(context, _state, _formState), step);
-                            waitForMessage = true;
-                        }
-                        else
-                        {
-                            // Responding
-                            matches = step.Match(context, _state, _formState, message);
-                        }
-                    }
-                    else
-                    {
-                        // Processing current step
-                        step = _form.Steps[_formState.Step];
-                        if (await step.DefineAsync(_state))
-                        {
-                            if (_formState.Phase() == StepPhase.Ready)
-                            {
-                                if (step.Type == StepType.Message)
-                                {
-                                    await PostAsync(step.Start(context, _state, _formState), step);
-                                    next = new NextStep();
-                                }
-                                else if (_formState.ProcessInputs)
-                                {
-                                    message = MessageActivityHelper.BuildMessageWithText(_formState.FieldInputs.Last().Item2);
-                                    lastPrompt = step.Start(context, _state, _formState);
-                                }
-                                else
-                                {
-                                    lastPrompt = await PostAsync(step.Start(context, _state, _formState), step);
-                                    waitForMessage = true;
-                                }
-                            }
-                            else if (_formState.Phase() == StepPhase.Responding)
-                            {
-                                matches = step.Match(context, _state, _formState, message);
-                            }
-                        }
-                        else
-                        {
-                            _formState.SetPhase(StepPhase.Completed);
-                            lastPrompt = null;
-                            next = new NextStep(StepDirection.Next);
-                        }
-                    }
+					if (result.Prompt != null)
+					{
+						lastPrompt = await PostAsync(result.Prompt, step);
+						waitForMessage = true;
+					}
 
-                    if (matches != null)
-                    {
-                        var inputText = MessageActivityHelper.GetSanitizedTextInput(message);
-                        matches = MatchAnalyzer.Coalesce(matches, inputText).ToArray();
-                        if (MatchAnalyzer.IsFullMatch(inputText, matches))
-                        {
-                            await DoStepAsync(step, matches);
-                        }
-                        else
-                        {
-                            // Filter non-active steps out of command matches
-                            var messageText = message.Text;
-                            var commands =
-                                (messageText == null || messageText.Trim().StartsWith("\""))
-                                ? new TermMatch[0]
-                                : (from command in MatchAnalyzer.Coalesce(_commands.Prompt.Recognizer.Matches(message), messageText)
-                                   where (command.Value is FormCommand
-                                          || (!_formState.ProcessInputs && _form.Fields.Field((string)command.Value).Active(_state)))
-                                   select command).ToArray();
+					return true;
+				};
 
-                            if (commands.Length == 1 && MatchAnalyzer.IsFullMatch(messageText, commands))
-                            {
-                                FormPrompt feedback;
-                                next = DoCommand(context, _state, _formState, step, commands, out feedback);
-                                if (feedback != null)
-                                {
-                                    await PostAsync(feedback, step);
-                                    await PostAsync(lastPrompt, step);
-                                    waitForMessage = true;
-                                }
-                            }
-                            else
-                            {
-                                if (matches.Count() == 0 && commands.Count() == 0)
-                                {
-                                    await PostAsync(step.NotUnderstood(context, _state, _formState, message), step);
-                                    if (_formState.ProcessInputs && !step.InClarify(_formState))
-                                    {
-                                        _formState.SetPhase(StepPhase.Ready);
-                                    }
-                                    else
-                                    {
-                                        waitForMessage = true;
-                                    }
-                                }
-                                else
-                                {
-                                    // Go with response since it looks possible
-                                    var bestMatch = MatchAnalyzer.BestMatches(matches, commands);
-                                    if (bestMatch == 0)
-                                    {
-                                        await DoStepAsync(step, matches);
-                                    }
-                                    else
-                                    {
-                                        FormPrompt feedback;
-                                        next = DoCommand(context, _state, _formState, step, commands, out feedback);
-                                        if (feedback != null)
-                                        {
-                                            await PostAsync(feedback, step);
-                                            await PostAsync(lastPrompt, step);
-                                            waitForMessage = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    next = ActiveSteps(next, _state);
-                }
+				while (!waitForMessage && MoveToNext(next))
+				{
+					IStep<T> step = null;
+					IEnumerable<TermMatch> matches = null;
+					if (next.Direction == StepDirection.Named && next.Names.Length > 1)
+					{
+						// We need to choose between multiple next steps
+						bool start = (_formState.Next == null);
+						_formState.Next = next;
+						step = new NavigationStep<T>(_form.Steps[_formState.Step].Name, _form, _state, _formState);
+						if (start)
+						{
+							lastPrompt = await PostAsync(step.Start(context, _state, _formState), step);
+							waitForMessage = true;
+						}
+						else
+						{
+							// Responding
+							matches = step.Match(context, _state, _formState, message);
+						}
+					}
+					else
+					{
+						// Processing current step
+						step = _form.Steps[_formState.Step];
+						if (await step.DefineAsync(_state))
+						{
+							if (_formState.Phase() == StepPhase.Ready)
+							{
+								if (step.Type == StepType.Message)
+								{
+									await PostAsync(step.Start(context, _state, _formState), step);
+									next = new NextStep();
+								}
+								else if (_formState.ProcessInputs)
+								{
+									message = MessageActivityHelper.BuildMessageWithText(_formState.FieldInputs.Last().Item2);
+									lastPrompt = step.Start(context, _state, _formState);
+								}
+								else
+								{
+									lastPrompt = await PostAsync(step.Start(context, _state, _formState), step);
+									waitForMessage = true;
+								}
+							}
+							else if (_formState.Phase() == StepPhase.Responding)
+							{
+								matches = step.Match(context, _state, _formState, message);
+							}
+						}
+						else
+						{
+							_formState.SetPhase(StepPhase.Completed);
+							lastPrompt = null;
+							next = new NextStep(StepDirection.Next);
+						}
+					}
 
-                if (next.Direction == StepDirection.Complete || next.Direction == StepDirection.Quit)
-                {
-                    if (next.Direction == StepDirection.Complete)
-                    {
-                        if (_form.Completion != null)
-                        {
-                            await _form.Completion(context, _state);
-                        }
-                        context.Done(_state);
-                    }
-                    else if (next.Direction == StepDirection.Quit)
-                    {
-                        throw new FormCanceledException<T>("Form quit.")
-                        {
-                            LastForm = _state,
-                            Last = _form.Steps[_formState.Step].Name,
-                            Completed = (from step in _form.Steps
-                                         where _formState.Phase(_form.StepIndex(step)) == StepPhase.Completed
-                                         select step.Name).ToArray()
-                        };
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-                else
-                {
-                    _formState.LastPrompt = (FormPrompt)lastPrompt?.Clone();
-                    context.Wait(MessageReceived);
-                }
-            }
-            catch (Exception inner)
-            {
-                if (!(inner is FormCanceledException<T>))
-                {
-                    throw new FormCanceledException<T>(inner.Message, inner)
-                    {
-                        LastForm = _state,
-                        Last = _form.Steps[_formState.Step].Name,
-                        Completed = (from step in _form.Steps
-                                     where _formState.Phase(_form.StepIndex(step)) == StepPhase.Completed
-                                     select step.Name).ToArray()
-                    };
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
+					if (matches != null)
+					{
+						var inputText = MessageActivityHelper.GetSanitizedTextInput(message);
+						matches = MatchAnalyzer.Coalesce(matches, inputText).ToArray();
+						if (MatchAnalyzer.IsFullMatch(inputText, matches))
+						{
+							await DoStepAsync(step, matches);
+						}
+						else
+						{
+							// Filter non-active steps out of command matches
+							var messageText = message.Text;
+							var commands =
+								(messageText == null || messageText.Trim().StartsWith("\""))
+								? new TermMatch[0]
+								: (from command in MatchAnalyzer.Coalesce(_commands.Prompt.Recognizer.Matches(message), messageText)
+								   where (command.Value is FormCommand
+										  || (!_formState.ProcessInputs && _form.Fields.Field((string)command.Value).Active(_state)))
+								   select command).ToArray();
 
-        #endregion
+							if (commands.Length == 1 && MatchAnalyzer.IsFullMatch(messageText, commands))
+							{
+								FormPrompt feedback;
+								next = DoCommand(context, _state, _formState, step, commands, out feedback);
+								if (feedback != null)
+								{
+									await PostAsync(feedback, step);
+									await PostAsync(lastPrompt, step);
+									waitForMessage = true;
+								}
+							}
+							else
+							{
+								if (matches.Count() == 0 && commands.Count() == 0)
+								{
+									await PostAsync(step.NotUnderstood(context, _state, _formState, message), step);
+									if (_formState.ProcessInputs && !step.InClarify(_formState))
+									{
+										_formState.SetPhase(StepPhase.Ready);
+									}
+									else
+									{
+										waitForMessage = true;
+									}
+								}
+								else
+								{
+									// Go with response since it looks possible
+									var bestMatch = MatchAnalyzer.BestMatches(matches, commands);
+									if (bestMatch == 0)
+									{
+										await DoStepAsync(step, matches);
+									}
+									else
+									{
+										FormPrompt feedback;
+										next = DoCommand(context, _state, _formState, step, commands, out feedback);
+										if (feedback != null)
+										{
+											await PostAsync(feedback, step);
+											await PostAsync(lastPrompt, step);
+											waitForMessage = true;
+										}
+									}
+								}
+							}
+						}
+					}
+					next = ActiveSteps(next, _state);
+				}
 
-        #region Implementation
+				if (next.Direction == StepDirection.Complete || next.Direction == StepDirection.Quit)
+				{
+					if (next.Direction == StepDirection.Complete)
+					{
+						if (_form.Completion != null)
+						{
+							await _form.Completion(context, _state);
+						}
+						//context.Done(_state);
+						//await context.EndDialogAsync(_state);
+						return new DialogTurnResult(DialogTurnStatus.Complete, _state);
+					}
+					else if (next.Direction == StepDirection.Quit)
+					{
+						throw new FormCanceledException<T>("Form quit.")
+						{
+							LastForm = _state,
+							Last = _form.Steps[_formState.Step].Name,
+							Completed = (from step in _form.Steps
+										 where _formState.Phase(_form.StepIndex(step)) == StepPhase.Completed
+										 select step.Name).ToArray()
+						};
+					}
+					else
+					{
+						throw new NotImplementedException();
+					}
+				}
+				else
+				{
+					_formState.LastPrompt = (FormPrompt)lastPrompt?.Clone();
+					//context.Wait(MessageReceived);
+					return new DialogTurnResult(DialogTurnStatus.Waiting);
+				}
+			}
+			catch (Exception inner)
+			{
+				if (!(inner is FormCanceledException<T>))
+				{
+					throw new FormCanceledException<T>(inner.Message, inner)
+					{
+						LastForm = _state,
+						Last = _form.Steps[_formState.Step].Name,
+						Completed = (from step in _form.Steps
+									 where _formState.Phase(_form.StepIndex(step)) == StepPhase.Completed
+									 select step.Name).ToArray()
+					};
+				}
+				else
+				{
+					throw;
+				}
+			}
+		}
 
-        private async Task SkipSteps()
+		#endregion
+
+
+		#region Implementation
+
+		private async Task SkipSteps()
         {
             if (!_options.HasFlag(FormOptions.PromptFieldsWithValues))
             {
@@ -773,7 +811,7 @@ namespace Microsoft.Bot.Builder.FormFlow
             return found;
         }
 
-        private NextStep DoCommand(IDialogContext context, T state, FormState form, IStep<T> step, IEnumerable<TermMatch> matches, out FormPrompt feedback)
+        private NextStep DoCommand(DialogContext context, T state, FormState form, IStep<T> step, IEnumerable<TermMatch> matches, out FormPrompt feedback)
         {
             // TODO: What if there are more than one command?
             feedback = null;

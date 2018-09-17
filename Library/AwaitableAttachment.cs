@@ -42,7 +42,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Internals.Fibers;
 using Microsoft.Bot.Connector;
-
+using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
@@ -148,10 +148,11 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             {
                 using (var client = new HttpClient())
                 {
-                    if (Microsoft​App​Credentials.IsTrustedServiceUrl(source.ContentUrl))
-                    {
-                        await client.AddAPIAuthorization();
-                    }
+					//TODO: add header to HttpClient to files can be retrieved
+                    //if (Microsoft​App​Credentials.IsTrustedServiceUrl(source.ContentUrl))
+                    //{
+                    //    await client.AddAPIAuthorization();
+                    //}
 
                     var stream = await client.GetStreamAsync(source.ContentUrl);
                     var ms = new MemoryStream();

@@ -351,7 +351,7 @@ namespace Microsoft.Bot.Builder.FormFlow
                 }
             }
 
-            internal override async Task<FormPrompt> Prompt(IDialogContext context, FormPrompt prompt, T state, IField<T> field)
+            internal override async Task<FormPrompt> Prompt(DialogContext context, FormPrompt prompt, T state, IField<T> field)
             {
                 return prompt == null ? prompt : await _prompter(context, prompt, state, field);
             }

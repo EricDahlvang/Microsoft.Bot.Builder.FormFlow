@@ -122,7 +122,7 @@ namespace Microsoft.Bot.Builder.FormFlow
     /// such as sending it to your service.  It cannot be used to create a new
     /// dialog or return a value to the parent dialog.
     /// </remarks>
-    public delegate Task OnCompletionAsyncDelegate<T>(IDialogContext context, T state);
+    public delegate Task OnCompletionAsyncDelegate<T>(DialogContext context, T state);
 
     /// <summary>
     /// Interface for controlling a FormFlow dialog.
@@ -132,7 +132,7 @@ namespace Microsoft.Bot.Builder.FormFlow
     /// <see cref="FormDialog{T}"/> is an implementation of this interface.
     /// </remarks>
     /// <exception cref="FormCanceledException{T}">Thrown when the user quits while filling in a form, or there is an underlying exception in the code.</exception>
-    public interface IFormDialog<T> : IDialog<T>
+    public interface IFormDialog<T> 
         where T : class
     {
         /// <summary>

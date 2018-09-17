@@ -104,14 +104,14 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return await _field.DefineAsync(state);
         }
 
-        public FormPrompt Start(IDialogContext context, T state, FormState form)
+        public FormPrompt Start(DialogContext context, T state, FormState form)
         {
             form.SetPhase(StepPhase.Responding);
             form.StepState = new FieldStepState(FieldStepStates.SentPrompt);
             return _field.Prompt.Prompt(state, _field, _field.Prompt.Recognizer.PromptArgs());
         }
 
-        public IEnumerable<TermMatch> Match(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public IEnumerable<TermMatch> Match(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             IEnumerable<TermMatch> matches = null;
             Debug.Assert(form.Phase() == StepPhase.Responding);
@@ -140,7 +140,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return matches;
         }
 
-        public async Task<StepResult> ProcessAsync(IDialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
+        public async Task<StepResult> ProcessAsync(DialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
         {
             var inputText = MessageActivityHelper.GetSanitizedTextInput(input);
 
@@ -324,7 +324,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return state.State == FieldStepStates.SentClarify;
         }
 
-        public FormPrompt NotUnderstood(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public FormPrompt NotUnderstood(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             var inputText = MessageActivityHelper.GetSanitizedTextInput(input);
 
@@ -342,7 +342,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return feedback;
         }
 
-        public bool Back(IDialogContext context, T state, FormState form)
+        public bool Back(DialogContext context, T state, FormState form)
         {
             bool backedUp = false;
             var fieldState = (FieldStepState)form.StepState;
@@ -537,7 +537,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             _field = field;
         }
 
-        public bool Back(IDialogContext context, T state, FormState form)
+        public bool Back(DialogContext context, T state, FormState form)
         {
             return false;
         }
@@ -565,7 +565,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return _field.Active(state);
         }
 
-        public IEnumerable<TermMatch> Match(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public IEnumerable<TermMatch> Match(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             return _field.Prompt.Recognizer.Matches(input);
         }
@@ -586,14 +586,14 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             }
         }
 
-        public FormPrompt NotUnderstood(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public FormPrompt NotUnderstood(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             var template = _field.Template(TemplateUsage.NotUnderstood);
             var prompter = new Prompter<T>(template, _field.Form, null);
             return prompter.Prompt(state, _field, MessageActivityHelper.GetSanitizedTextInput(input));
         }
 
-        public async Task<StepResult> ProcessAsync(IDialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
+        public async Task<StepResult> ProcessAsync(DialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
         {
             var value = matches.First().Value;
             form.StepState = null;
@@ -607,7 +607,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return await _field.DefineAsync(state);
         }
 
-        public FormPrompt Start(IDialogContext context, T state, FormState form)
+        public FormPrompt Start(DialogContext context, T state, FormState form)
         {
             form.SetPhase(StepPhase.Responding);
             return _field.Prompt.Prompt(state, _field);
@@ -688,7 +688,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             _fields = fields;
         }
 
-        public bool Back(IDialogContext context, T state, FormState form)
+        public bool Back(DialogContext context, T state, FormState form)
         {
             form.Next = null;
             return false;
@@ -707,7 +707,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return true;
         }
 
-        public IEnumerable<TermMatch> Match(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public IEnumerable<TermMatch> Match(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             return _field.Prompt.Recognizer.Matches(input);
         }
@@ -733,13 +733,13 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return false;
         }
 
-        public FormPrompt NotUnderstood(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public FormPrompt NotUnderstood(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             var template = _field.Template(TemplateUsage.NotUnderstood);
             return new Prompter<T>(template, _field.Form, _field.Prompt.Recognizer, _fields).Prompt(state, _field, MessageActivityHelper.GetSanitizedTextInput(input));
         }
 
-        public async Task<StepResult> ProcessAsync(IDialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
+        public async Task<StepResult> ProcessAsync(DialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
         {
             NextStep next;
             form.Next = null;
@@ -760,7 +760,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             throw new NotImplementedException();
         }
 
-        public FormPrompt Start(IDialogContext context, T state, FormState form)
+        public FormPrompt Start(DialogContext context, T state, FormState form)
         {
             return _field.Prompt.Prompt(state, _field);
         }
@@ -827,7 +827,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return _condition(state);
         }
 
-        public bool Back(IDialogContext context, T state, FormState form)
+        public bool Back(DialogContext context, T state, FormState form)
         {
             return false;
         }
@@ -853,7 +853,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             }
         }
 
-        public IEnumerable<TermMatch> Match(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public IEnumerable<TermMatch> Match(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             throw new NotImplementedException();
         }
@@ -876,12 +876,12 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return false;
         }
 
-        public FormPrompt NotUnderstood(IDialogContext context, T state, FormState form, IMessageActivity input)
+        public FormPrompt NotUnderstood(DialogContext context, T state, FormState form, IMessageActivity input)
         {
             throw new NotImplementedException();
         }
 
-        public Task<StepResult> ProcessAsync(IDialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
+        public Task<StepResult> ProcessAsync(DialogContext context, T state, FormState form, IMessageActivity input, IEnumerable<TermMatch> matches)
         {
             throw new NotImplementedException();
         }
@@ -895,7 +895,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return true;
         }
 
-        public FormPrompt Start(IDialogContext context, T state, FormState form)
+        public FormPrompt Start(DialogContext context, T state, FormState form)
         {
             form.SetPhase(StepPhase.Completed);
             var prompt = new Prompter<T>(_promptDefinition, _form, null);
