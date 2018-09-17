@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.FormFlow", "Library\Microsoft.Bot.Builder.FormFlow.csproj", "{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug - NuGet Packages|Any CPU = Debug - NuGet Packages|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Documentation|Any CPU = Documentation|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Debug - NuGet Packages|Any CPU.ActiveCfg = Debug - NuGet Packages|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Debug - NuGet Packages|Any CPU.Build.0 = Debug - NuGet Packages|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {491646E9-44F6-4B2A-A2DA-A6E4F35DD8AF}
+	EndGlobalSection
+EndGlobal
