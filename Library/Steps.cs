@@ -515,10 +515,10 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         [Serializable]
 		public class FieldStepState
         {
-            internal FieldStepStates State;
-            internal string Unmatched;
-            internal List<object> Settled;
-            internal List<Ambiguous> Clarifications;
+            public FieldStepStates State;
+			public string Unmatched;
+			public List<object> Settled;
+			public List<Ambiguous> Clarifications;
             public FieldStepState(FieldStepStates state)
             {
                 State = state;

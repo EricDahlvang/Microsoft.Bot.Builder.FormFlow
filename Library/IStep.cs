@@ -40,10 +40,10 @@ using Microsoft.Bot.Schema;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
 {
-    internal enum StepPhase { Ready, Responding, Completed };
-    internal enum StepType { Field, Confirm, Navigation, Message };
+    public enum StepPhase { Ready, Responding, Completed };
+	public enum StepType { Field, Confirm, Navigation, Message };
 
-    internal struct StepResult
+	public struct StepResult
     {
         internal StepResult(bool success, NextStep next, FormPrompt feedback, FormPrompt prompt)
         {
