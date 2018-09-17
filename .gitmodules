@@ -1,0 +1,3 @@
+[submodule "external/nChronic"]
+	path = external/nChronic
+	url = https://github.com/EricDahlvang/nChronic.git
