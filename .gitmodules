@@ -1,3 +1,7 @@
+[submodule "external/botbuilder-dotnet"]
+	path = external/botbuilder-dotnet
+	url = https://github.com/Microsoft/botbuilder-dotnet.git
+	branch = master	
 [submodule "external/nChronic"]
 	path = external/nChronic
 	url = https://github.com/EricDahlvang/nChronic.git
