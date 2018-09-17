@@ -9,10 +9,14 @@ netstandard2.0 port of https://github.com/Microsoft/BotBuilder/tree/master/CShar
   - MessageReceived called by ComponentDialog.ContinueDialogAsync and .BeginDialogAsync
 
 FormFlow dialogs can be added to a DialogSet:
+
+[SandwichOrder](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/SandwichOrder.cs#L36)
 ```cs
-_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
+_dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
 ```
 Or added to a component dialog:
+
+[HotelsDialog](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/HotelsDialog.cs#L24)
 ```cs
 public HotelsDialog() : base(nameof(HotelsDialog))
 {
