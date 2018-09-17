@@ -46,7 +46,9 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
         {
             return new FormBuilder<SandwichOrder>()
                     .Message("Welcome to the simple sandwich order bot!")
-                    .Build();
+					.AddRemainingFields()
+					.Message("Thanks for ordering a sanwich!")
+					.Build();
         }
     };
 }

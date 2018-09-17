@@ -82,9 +82,8 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
                         return result;
                     })
                 .Field(nameof(BuilderSandwich.DeliveryTime), "What time do you want your sandwich delivered? {||}")
-                .Confirm("Yes?") //todo: fix this
-                //.Confirm("Do you want to order your {Length} {Sandwich} on {Bread} {&Bread} with {[{Cheese} {Toppings} {Sauces}]} to be sent to {DeliveryAddress} {?at {DeliveryTime:t}}?")
-                .AddRemainingFields()
+				.Confirm("Do you want to order your {Length} {Sandwich} on {Bread} {&Bread} with {[{Cheese} {Toppings} {Sauce}]} to be sent to {DeliveryAddress} {?at {DeliveryTime:t}}?")
+				.AddRemainingFields()
                 .Message("Thanks for ordering a sandwich!")
                 .OnCompletion(processOrder)
                 .Build();

@@ -498,7 +498,7 @@ namespace Microsoft.Bot.Builder.FormFlow
 						{
 							await _form.Completion(context, _state);
 						}
-						//context.Done(_state);
+						await context.Done(_state);
 						//await context.EndDialogAsync(_state);
 						return new DialogTurnResult(DialogTurnStatus.Complete, _state);
 					}
