@@ -498,10 +498,10 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             return prompt;
         }
 
-        internal enum FieldStepStates { Unknown, SentPrompt, SentClarify };
+        public enum FieldStepStates { Unknown, SentPrompt, SentClarify };
 
         [Serializable]
-        internal class Ambiguous
+		public class Ambiguous
         {
             public readonly string Response;
             public object[] Values;
@@ -513,7 +513,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         }
 
         [Serializable]
-        internal class FieldStepState
+		public class FieldStepState
         {
             internal FieldStepStates State;
             internal string Unmatched;

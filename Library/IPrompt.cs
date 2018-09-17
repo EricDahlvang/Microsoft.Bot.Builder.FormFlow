@@ -199,7 +199,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
             var actions = new List<CardAction>();
             foreach (var button in prompt.Buttons)
             {
-                actions.Add(new CardAction(ActionTypes.ImBack, button.Description, button.Image, button.Message ?? button.Description));
+                actions.Add(new CardAction(ActionTypes.ImBack, button.Description, button.Image, button.Message ?? button.Description, value: button.Message ?? button.Description));
             }
 
             var attachments = new List<Attachment>();
@@ -232,7 +232,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
                     subtitle: button.SubTitle ?? description.SubTitle,
                     text: prompt.Prompt,
                     images: (image == null ? null : (new List<CardImage>() { new CardImage() { Url = image } })),
-                    buttons: new List<CardAction>() { new CardAction(ActionTypes.ImBack, button.Description, null, button.Message ?? button.Description) })
+                    buttons: new List<CardAction>() { new CardAction(ActionTypes.ImBack, button.Description, null, button.Message ?? button.Description, value: button.Message ?? button.Description) })
                     .ToAttachment());
             }
             return attachments;

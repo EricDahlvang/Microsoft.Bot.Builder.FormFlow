@@ -60,7 +60,7 @@ namespace Microsoft.Bot.Builder.FormFlow
         /// <typeparam name="T">The form type.</typeparam>
         /// <param name="options">The form options.</param>
         /// <returns>The form dialog.</returns>
-        public static IFormDialog<T> FromType<T>(FormOptions options = FormOptions.None) where T : class, new()
+        public static FormDialog<T> FromType<T>(FormOptions options = FormOptions.None) where T : class, new()
         {
             return new FormDialog<T>(new T(), null, options);
         }
@@ -72,7 +72,7 @@ namespace Microsoft.Bot.Builder.FormFlow
         /// <param name="buildForm">The delegate to build the form.</param>
         /// <param name="options">The form options.</param>
         /// <returns>The form dialog.</returns>
-        public static IFormDialog<T> FromForm<T>(BuildFormDelegate<T> buildForm, FormOptions options = FormOptions.None) where T : class, new()
+        public static FormDialog<T> FromForm<T>(BuildFormDelegate<T> buildForm, FormOptions options = FormOptions.None) where T : class, new()
         {
             return new FormDialog<T>(new T(), buildForm, options);
         }

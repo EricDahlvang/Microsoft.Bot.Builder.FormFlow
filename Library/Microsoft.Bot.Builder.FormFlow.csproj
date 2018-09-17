@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<Version Condition=" '$(PackageVersion)' == '' ">4.0.0-local</Version>
-		<Version Condition=" '$(PackageVersion)' != '' ">$(PackageVersion)</Version>
-		<PackageVersion Condition=" '$(PackageVersion)' == '' ">4.0.0-local</PackageVersion>
-		<PackageVersion Condition=" '$(PackageVersion)' != '' ">$(PackageVersion)</PackageVersion>
-		<Configurations>Debug;Release;Documentation;Debug - NuGet Packages;</Configurations>
-	</PropertyGroup>
-
+  <PropertyGroup>
+    <Version Condition=" '$(PackageVersion)' == '' ">4.0.0-local</Version>
+    <Version Condition=" '$(PackageVersion)' != '' ">$(PackageVersion)</Version>
+    <PackageVersion Condition=" '$(PackageVersion)' == '' ">4.0.0-local</PackageVersion>
+    <PackageVersion Condition=" '$(PackageVersion)' != '' ">$(PackageVersion)</PackageVersion>
+    <Configurations>Debug;Release;Documentation;Debug - NuGet Packages;</Configurations>
+  </PropertyGroup>
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackageId>Microsoft.Bot.Builder.FormFlow</PackageId>
@@ -41,6 +39,7 @@
   
 	<PropertyGroup>
 	  <CodeAnalysisRuleSet>Microsoft.Bot.Builder.FormFlow.ruleset</CodeAnalysisRuleSet>
+	  <Version>4.0.0</Version>
 	</PropertyGroup>
   
 	<ItemGroup>
@@ -49,8 +48,6 @@
 
 	<ItemGroup>
     <PackageReference Include="AsyncUsageAnalyzers" Version="1.0.0-alpha003" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Bot.Builder" Condition=" '$(PackageVersion)' != '' " Version="4.0.0.39485" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.0.0.39485" />
 		<PackageReference Include="Microsoft.Recognizers.Text.Choice" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Recognizers.Text.DateTime" Version="1.1.0" />
 		<PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.1" />
@@ -58,6 +55,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\External\botbuilder-dotnet\libraries\Microsoft.Bot.Builder.Dialogs\Microsoft.Bot.Builder.Dialogs.csproj" />
+	  <ProjectReference Include="..\External\botbuilder-dotnet\libraries\Microsoft.Bot.Builder\Microsoft.Bot.Builder.csproj" />
+	  <ProjectReference Include="..\External\botbuilder-dotnet\libraries\Microsoft.Bot.Connector\Microsoft.Bot.Connector.csproj" />
+	  <ProjectReference Include="..\External\botbuilder-dotnet\libraries\Microsoft.Bot.Schema\Microsoft.Bot.Schema.csproj" />
 	  <ProjectReference Include="..\External\nChronic\src\Chronic\Chronic.NetStandard.csproj" />
 	</ItemGroup>
 
