@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.FormFlow", "Library\Microsoft.Bot.Builder.FormFlow.csproj", "{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chronic.NetStandard", "External\nChronic\src\Chronic\Chronic.NetStandard.csproj", "{2FD9814C-AFFC-4A46-9445-A3165FECDE93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug - NuGet Packages|Any CPU = Debug - NuGet Packages|Any CPU
@@ -21,6 +23,14 @@ Global
 		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
 		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2C4BB3-41EA-4B6D-BFC5-BE66DD524CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Debug - NuGet Packages|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Debug - NuGet Packages|Any CPU.Build.0 = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Documentation|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Documentation|Any CPU.Build.0 = Debug|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD9814C-AFFC-4A46-9445-A3165FECDE93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
