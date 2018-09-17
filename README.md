@@ -9,16 +9,13 @@ netstandard2.0 port of https://github.com/Microsoft/BotBuilder/tree/master/CShar
   - MessageReceived called by ComponentDialog.ContinueDialogAsync and .BeginDialogAsync
 
 FormFlow dialogs can be added to a DialogSet:
-
-[SandwichOrder](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/SandwichOrder.cs#L36)
- > ported from v3 BotBuilder [SandwichOrder](https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Samples/SimpleSandwichBot/Sandwich.cs#L33) FormFlow dialog
 ```cs
 _dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
 ```
-Or added to a component dialog:
+[SandwichOrder](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/SandwichOrder.cs#L36)
+ > ported from v3 BotBuilder [SandwichOrder](https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Samples/SimpleSandwichBot/Sandwich.cs#L33) FormFlow dialog
 
-[HotelsDialog](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/HotelsDialog.cs#L24)
- > ported from v3 BotBuilder-Samples [HotelsDialog](https://github.com/Microsoft/BotBuilder-Samples/blob/master/CSharp/core-MultiDialogs/Dialogs/HotelsDialog.cs) 
+Or added to a component dialog:
 ```cs
 public HotelsDialog() : base(nameof(HotelsDialog))
 {
@@ -26,6 +23,9 @@ public HotelsDialog() : base(nameof(HotelsDialog))
     base.AddDialog(hotelsFormDialog);
 }
 ```
+[HotelsDialog](https://github.com/EricDahlvang/Microsoft.Bot.Builder.FormFlow/blob/master/Sample/Microsoft.Bot.Builder.TestBot/Dialogs/HotelsDialog.cs#L24)
+ > ported from v3 BotBuilder-Samples [HotelsDialog](https://github.com/Microsoft/BotBuilder-Samples/blob/master/CSharp/core-MultiDialogs/Dialogs/HotelsDialog.cs) 
+
 
 ## Repository Instructions
 
