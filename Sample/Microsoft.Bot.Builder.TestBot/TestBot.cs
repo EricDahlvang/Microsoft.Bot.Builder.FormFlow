@@ -23,20 +23,13 @@ namespace Microsoft.Bot.Builder.TestBot
 
 			// a semaphore to serialize access to the bot state
 			_semaphore = accessors.SemaphoreSlim;
-			try
-			{
-				_semaphore.Wait();
-				// add the various named dialogs that can be used
-				_dialogs.Add(new MenuDialog());
-				_dialogs.Add(FormDialog.FromForm(Order.BuildOrderForm));
-				_dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
-				_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
-				_dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
-			}
-			finally
-			{
-				_semaphore.Release();
-			}
+
+			// add the various named dialogs that can be used
+			_dialogs.Add(new MenuDialog());
+			_dialogs.Add(FormDialog.FromForm(Order.BuildOrderForm));
+			_dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
+			_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
+			_dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
 		}
 
 		public async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
@@ -59,7 +52,8 @@ namespace Microsoft.Bot.Builder.TestBot
 					// HasResults = true if the dialog just completed and the final  result can be retrived
 					// if both are false this indicates a new dialog needs to start
 					// an additional check for Responded stops a new waterfall from being automatically started over
-					if (results.Status == DialogTurnStatus.Empty || (results.Status == DialogTurnStatus.Complete && dialogContext.ActiveDialog == null))
+					if ((results.Status == DialogTurnStatus.Cancelled || results.Status == DialogTurnStatus.Empty) 
+                          || (results.Status == DialogTurnStatus.Complete && dialogContext.ActiveDialog == null))
 					{
 						var text = turnContext.Activity.Text;
 						var foundDialog = _dialogs.Find(text);

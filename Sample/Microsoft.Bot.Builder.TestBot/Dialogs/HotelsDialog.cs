@@ -33,16 +33,23 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
 
         public async override Task<DialogTurnResult> ContinueDialogAsync(DialogContext outerDc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var childTurnResult = base.ContinueDialogAsync(outerDc, cancellationToken).Result;
-            if (childTurnResult.Status == DialogTurnStatus.Complete)
+            DialogTurnResult turnResult = null;
+            try
             {
-                await ResumeAfterHotelsFormDialog(outerDc, childTurnResult.Result as HotelsQuery);
-                return childTurnResult;
+                turnResult = await base.ContinueDialogAsync(outerDc, cancellationToken);
+                if (turnResult.Status == DialogTurnStatus.Complete)
+                {
+                    await ResumeAfterHotelsFormDialog(outerDc, turnResult.Result as HotelsQuery);
+                }
             }
-            else
+            catch (FormCanceledException<HotelsQuery>)
             {
-                return childTurnResult;
+                //user cancelled, ignore the exception
+                await outerDc.Context.SendActivityAsync("Okay, cancelled.");
+                turnResult = new DialogTurnResult(DialogTurnStatus.Cancelled);
+                await outerDc.EndDialogAsync(cancellationToken);
             }
+            return turnResult;
         }
 
         private IForm<HotelsQuery> BuildHotelsForm()

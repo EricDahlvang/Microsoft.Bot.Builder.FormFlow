@@ -1,34 +1,11 @@
-﻿namespace Microsoft.Bot.Builder.TestBot.Dialogs
+﻿using System;
+
+using Microsoft.Bot.Builder.FormFlow;
+using Microsoft.Bot.Builder.FormFlow.Advanced;
+
+namespace Microsoft.Bot.Builder.TestBot.Dialogs
 {
-    using System;
-  
-    using Microsoft.Bot.Builder.FormFlow;
-    using Microsoft.Bot.Builder.FormFlow.Advanced;
-  
-    public static class RegexConstants
-    {
-        public const string Email = @"[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-
-        public const string Phone = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
-    }
-    [Serializable]
-    public class Bouquet
-    {
-        public string Name { get; set; }
-
-        public string ImageUrl { get; set; }
-
-        public double Price { get; set; }
-
-        public string FlowerCategory { get; set; }
-    }
-    [Serializable]
-    public class PaymentDetails
-    {
-        public string CreditCardHolder { get; set; }
-
-        public string CreditCardNumber { get; set; }
-    }
+    /// from:  https://github.com/Microsoft/BotBuilder-Samples/blob/6c3d09c92ebeaf12ee7597a11bb09ac6e2fca6e5/CSharp/demo-ContosoFlowers/ContosoFlowers/Models/Order.cs
     [Serializable]
     public class Order
     {
@@ -40,25 +17,19 @@
 
         public string OrderID { get; set; }
 
-        [Prompt]
         public string RecipientFirstName { get; set; }
 
-        [Prompt(FieldCase = CaseNormalization.None)]
         public string RecipientLastName { get; set; }
 
-        [Prompt]
         [Pattern(RegexConstants.Phone)]
         public string RecipientPhoneNumber { get; set; }
 
-        [Prompt]
         [Pattern(@"^.{1,200}$")]
         public string Note { get; set; }
 
-        [Prompt]
         [Pattern(RegexConstants.Email)]
         public string SenderEmail { get; set; }
 
-        [Prompt]
         [Pattern(RegexConstants.Phone)]
         public string SenderPhoneNumber { get; set; }
 
@@ -68,10 +39,8 @@
 
         public bool AskToUseSavedSenderInfo { get; set; }
 
-        [Prompt]
         public UseSaveInfoResponse? UseSavedSenderInfo { get; set; }
 
-        [Prompt]
         public bool SaveSenderInfo { get; set; }
 
         public string DeliveryAddress { get; set; }
@@ -120,7 +89,38 @@
                         : new NextStep()))
                 .Field(nameof(SenderPhoneNumber), state => !state.UseSavedSenderInfo.HasValue || state.UseSavedSenderInfo.Value == UseSaveInfoResponse.Edit)
                 .Field(nameof(SaveSenderInfo), state => !state.UseSavedSenderInfo.HasValue || state.UseSavedSenderInfo.Value == UseSaveInfoResponse.Edit)
+                .OnCompletion(async (context, state) =>
+                    {
+                        await context.Context.SendActivityAsync("We are currently processing your order. We will message you the status.");
+                        await context.Context.SendActivityAsync($"Recipient: {state.RecipientFirstName} {state.RecipientLastName}");
+                        await context.Context.SendActivityAsync($"Note: {state.Note}");
+                        await context.Context.SendActivityAsync($"..etc..");
+                    })
                 .Build();
         }
+    }
+    public static class RegexConstants
+    {
+        public const string Email = @"[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
+        public const string Phone = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+    }
+    [Serializable]
+    public class Bouquet
+    {
+        public string Name { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public double Price { get; set; }
+
+        public string FlowerCategory { get; set; }
+    }
+    [Serializable]
+    public class PaymentDetails
+    {
+        public string CreditCardHolder { get; set; }
+
+        public string CreditCardNumber { get; set; }
     }
 }

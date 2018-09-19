@@ -5,11 +5,10 @@ using Microsoft.Bot.Builder.FormFlow;
 
 //from https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Samples/SimpleSandwichBot/Sandwich.cs
 
-    
-    // The SandwichOrder is the simple form you want to fill out.  It must be serializable so the bot can be stateless.
+// The SandwichOrder is an example of a simple form.  It must be serializable so FormFlow can save each answer in Bot State..
 // The order of fields defines the default order in which questions will be asked.
-// Enumerations shows the legal options for each field in the SandwichOrder and the order is the order values will be presented 
-// in a conversation.
+// Enumerations shows the valid options for each field in the SandwichOrder and the order is the sequence the values 
+// will be presented in the conversation.
 namespace Microsoft.Bot.Builder.TestBot.Dialogs
 {
     public enum SandwichOptions
@@ -44,11 +43,12 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
 
         public static IForm<SandwichOrder> BuildForm()
         {
+            //todo: FormCanceledException is not handled
             return new FormBuilder<SandwichOrder>()
                     .Message("Welcome to the simple sandwich order bot!")
-					.AddRemainingFields()
-					.Message("Thanks for ordering a sanwich!")
-					.Build();
+                    .AddRemainingFields()
+                    .Message("Thanks for ordering a sanwich!")
+                    .Build();
         }
     };
 }
