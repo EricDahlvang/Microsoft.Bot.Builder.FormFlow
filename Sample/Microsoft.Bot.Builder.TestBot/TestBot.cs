@@ -34,18 +34,18 @@ namespace Microsoft.Bot.Builder.TestBot
 
         public async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (turnContext.Activity.Type == ActivityTypes.Message)
+            // We only want to pump one activity at a time through the state.
+            // Note the state is shared across all instances of this IBot class so we
+            // create the semaphore globally with the accessors.
+            try
             {
-                // We only want to pump one activity at a time through the state.
-                // Note the state is shared across all instances of this IBot class so we
-                // create the semaphore globally with the accessors.
-                try
-                {
-                    await _semaphore.WaitAsync();
+                await _semaphore.WaitAsync();
 
+                var dialogContext = await _dialogs.CreateContextAsync(turnContext, cancellationToken);
+                if (turnContext.Activity.Type == ActivityTypes.Message)
+                {
                     // run the DialogSet - let the framework identify the current state of the dialog from 
                     // the dialog stack and figure out what (if any) is the active dialog
-                    var dialogContext = await _dialogs.CreateContextAsync(turnContext, cancellationToken);
                     var results = await dialogContext.ContinueDialogAsync(cancellationToken);
 
                     // HasActive = true if there is an active dialog on the dialogstack
@@ -67,16 +67,21 @@ namespace Microsoft.Bot.Builder.TestBot
                         }
                     }
                 }
-                finally
+                else if (turnContext.Activity.Type == ActivityTypes.Event && turnContext.Activity.Name == "requestMenuDialog")
                 {
-                    _semaphore.Release();
+                    await dialogContext.BeginDialogAsync(typeof(MenuDialog).Name, null, cancellationToken);
                 }
             }
-            else if (turnContext.Activity.Type == ActivityTypes.Event && turnContext.Activity.Name == "requestMenuDialog")
+            catch (FormCanceledException ex)
             {
                 var dialogContext = await _dialogs.CreateContextAsync(turnContext, cancellationToken);
                 await dialogContext.BeginDialogAsync(typeof(MenuDialog).Name, null, cancellationToken);
             }
+            finally
+            {
+                _semaphore.Release();
+            }
+
         }
 	}
 }

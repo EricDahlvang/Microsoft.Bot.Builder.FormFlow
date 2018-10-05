@@ -501,24 +501,57 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         public enum FieldStepStates { Unknown, SentPrompt, SentClarify };
 
         [Serializable]
-		public class Ambiguous
+        public class Ambiguous
         {
             public readonly string Response;
-            public object[] Values;
+            public object[] Items;
+            public Type Types;
+
+            public Ambiguous()
+            {
+            }
+
             public Ambiguous(string response, IEnumerable<object> values)
             {
                 Response = response;
-                Values = values.ToArray<object>();
+                Items = values.ToArray<object>();
+
+                if (Items.Any())
+                {
+                    var type = Items.First().GetType();
+                    if (type.IsEnum)
+                    {
+                        Types = type;
+                    }
+                }
+            }
+
+            public object[] Values
+            {
+                get
+                {
+                    // handle boxed enums not deserializing correctly
+                    if (Types != null && Items.Any())
+                    {
+                        var first = Items.First();
+                        if (Types.IsEnum && (!(first is Enum)))
+                        {
+                            Items = Items.Select(t => Enum.ToObject(Types, t)).ToArray();
+                        }
+                    }
+
+                    return Items;
+                }
             }
         }
 
         [Serializable]
-		public class FieldStepState
+        public class FieldStepState
         {
             public FieldStepStates State;
-			public string Unmatched;
-			public List<object> Settled;
-			public List<Ambiguous> Clarifications;
+            public string Unmatched;
+            public List<object> Settled;
+            public List<Ambiguous> Clarifications;
             public FieldStepState(FieldStepStates state)
             {
                 State = state;
