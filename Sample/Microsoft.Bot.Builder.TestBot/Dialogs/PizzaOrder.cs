@@ -159,7 +159,7 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
         public int? Bottles;
         public List<string> Specials;
 
-        [Pattern(@"(\(\d{3}\))?\s*\d{3}(-|\s*)\d{4}")]
+        [Pattern(RegexConstants.Phone)]
         public string Phone;
 
         public override string ToString()

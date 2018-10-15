@@ -2,56 +2,23 @@
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.FormFlow.Advanced;
 using Microsoft.Bot.Schema;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Microsoft.Bot.Builder.TestBot.Dialogs
 {
     public class ScheduleCallbackDialog
     {
         public string Name { get; set; }
-        [Pattern(@"(\(\d{3}\))?\s*\d{3}(-|\s*)\d{4}")]
+        [Pattern(RegexConstants.Phone)]
         public string PhoneNumber { get; set; }
         
+        [Prompt("Please choose a Date for the callback:")]
         public DateTime? RequestedDate { get; set; }
 
         private static AdaptiveCard GetDateCard(Activity activity)
         {
-            //AdaptiveCard card = new AdaptiveCard();
-            //card.Body = new List<AdaptiveElement>()
-            //{
-            //    new AdaptiveTextBlock()
-            //    {
-            //        Text = "What date would you like to meet?"
-            //    },
-            //    new AdaptiveDateInput()
-            //    {
-            //        Value = DateTime.Now.ToShortDateString(),
-            //        Id = "dateInp"
-            //    },
-            //    new AdaptiveTimeInput()
-            //    {
-            //        Value = DateTime.Now.ToShortTimeString(),
-            //        Id = "timeInp"
-            //    }
-            //};
-            //card.Actions = new List<AdaptiveAction>()
-            //{
-            //    new AdaptiveSubmitAction()
-            //    {
-            //        Type = "Action.Submit",
-            //        Title = "Confirm"
-            //    }
-            //};
-            //return card;
             var useMonth = DateTime.Now;
-
-
-            //activity.ChannelData <-- check for previousDate?
-            //if (previousDate.HasValue)
-            //    useMonth = previousDate.Value.AddMonths(1);
-
+            
             //if there are only three days left in the month, use next month
             if (useMonth.AddDays(3).Month > useMonth.Month)
                 useMonth = DateTime.Now.AddDays(3);
@@ -162,16 +129,6 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
             public AdaptiveCard ToCard()
             {
                 AdaptiveCard json = new AdaptiveCard();
-                //var monthContainer = new AdaptiveContainer();
-                //monthContainer.Style = AdaptiveContainerStyle.Default;
-                //monthContainer.Items.Add(new AdaptiveTextBlock()
-                //{
-                //    Text = this.monthName + " →",
-                //    Weight = AdaptiveTextWeight.Bolder
-                //});
-                //var submitJson = JsonConvert.SerializeObject(new { PreviousDate = this.firstDay });
-                //monthContainer.SelectAction = new AdaptiveSubmitAction() { DataJson = submitJson };
-                //json.Body.Add(monthContainer);
                 json.Body.Add(new AdaptiveColumnSet());
                 AdaptiveColumnSet columnSet = (AdaptiveColumnSet)json.Body[0];
                 for (int cols = 0; cols < 7; cols++)
@@ -210,7 +167,6 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
                                 container.Items.Add(row);
 
                                 columnSet.Columns[cols].Items.Add(container);
-                                //container.SelectAction = new AdaptiveSubmitAction() { DataJson = JsonConvert.SerializeObject(new { scheduleDate = day.Date }) };
                                 container.SelectAction = new AdaptiveSubmitAction() { Data = day.Date.ToShortDateString() };
                             }
                         }

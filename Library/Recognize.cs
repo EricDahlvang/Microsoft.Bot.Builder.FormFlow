@@ -41,10 +41,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using Chronic;
+
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Recognizers.Text;
+using Microsoft.Recognizers.Text.DateTime;
+using static Microsoft.Recognizers.Text.Culture;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
 {
@@ -721,7 +724,6 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         public RecognizeDateTime(IField<T> field)
             : base(field)
         {
-            _parser = new Chronic.Parser();
         }
 
         public override string Help(T state, object defaultValue)
@@ -734,22 +736,30 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         public override TermMatch Parse(string input)
         {
             TermMatch match = null;
-            if (Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName != "en")
+
+            string culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName ?? English;
+            List<ModelResult> results = DateTimeRecognizer.RecognizeDateTime(input, culture);
+            if (results.Count > 0)
             {
-                DateTime dt;
-                if (DateTime.TryParse(input, Thread.CurrentThread.CurrentUICulture.DateTimeFormat, DateTimeStyles.None, out dt))
+                List<Dictionary<string, string>> allValues = (List<Dictionary<string, string>>)results[0].Resolution["values"];
+                if (allValues.Count > 0)
                 {
-                    match = new TermMatch(0, input.Length, 1.0, dt);
+                    Dictionary<string,string> values = allValues.FirstOrDefault(v => v.Keys.Contains("value"));
+                    if (values != null && values.Count > 0)
+                    {
+                        string value = null;
+                        if (values.TryGetValue("value", out value))
+                        {
+                            DateTime asDateTime ;
+                            if (DateTime.TryParse(value, out asDateTime))
+                            {
+                                match = new TermMatch(0, input.Length, 1.0, asDateTime);
+                            }
+                        }
+                    }
                 }
             }
-            else
-            {
-                var parse = _parser.Parse(input);
-                if (parse != null && parse.Start.HasValue)
-                {
-                    match = new TermMatch(0, input.Length, 1.0, parse.Start.Value);
-                }
-            }
+
             return match;
         }
 
@@ -761,9 +771,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
         public override DescribeAttribute ValueDescription(object value)
         {
             return new DescribeAttribute(((DateTime)value).ToString(Thread.CurrentThread.CurrentUICulture.DateTimeFormat));
-        }
-
-        private Parser _parser;
+        }        
     }
 
     /// <summary>

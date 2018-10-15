@@ -77,6 +77,7 @@ namespace Microsoft.Bot.Builder.TestBot
             catch (FormCanceledException ex)
             {
                 var dialogContext = await _dialogs.CreateContextAsync(turnContext, cancellationToken);
+                await dialogContext.Context.SendActivityAsync("Form Cancelled");
                 await dialogContext.BeginDialogAsync(typeof(MenuDialog).Name, null, cancellationToken);
             }
             finally
