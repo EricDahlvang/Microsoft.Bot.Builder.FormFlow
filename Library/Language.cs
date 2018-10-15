@@ -39,7 +39,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Microsoft.Bot.Builder.Resource;
+using Microsoft.Bot.Builder.FormFlow.Resource;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
 {

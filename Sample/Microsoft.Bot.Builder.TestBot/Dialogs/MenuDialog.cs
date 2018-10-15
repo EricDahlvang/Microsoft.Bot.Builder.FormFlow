@@ -39,7 +39,9 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
                            GetMenuOption("Hotels Dialog", nameof(HotelsDialog)),
                            GetMenuOption("Simple Sandwich", nameof(SandwichOrder)),
                            GetMenuOption("Builder Sandwich", nameof(BuilderSandwich)),
-                           GetMenuOption("Process Order", nameof(Order)),                           
+                           GetMenuOption("Pizza Order", nameof(PizzaOrder)),
+                           GetMenuOption("Process Order", nameof(Order)),
+                           GetMenuOption("Schedule Callback", nameof(ScheduleCallbackDialog)),
                         }
             };
         }

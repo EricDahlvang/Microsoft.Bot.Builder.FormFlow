@@ -38,7 +38,7 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 
-using static Microsoft.Bot.Builder.Resource.Extensions;
+using static Microsoft.Bot.Builder.FormFlow.Resource.Extensions;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced
 {

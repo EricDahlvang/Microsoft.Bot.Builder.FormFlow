@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Bot.Builder.Resource {
+namespace Microsoft.Bot.Builder.FormFlow.Resource {
     using System;
     
     

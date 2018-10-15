@@ -37,7 +37,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.FormFlow.Advanced;
-using Microsoft.Bot.Builder.Resource;
+using Microsoft.Bot.Builder.FormFlow.Resource;
 
 namespace Microsoft.Bot.Builder.FormFlow
 {

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Microsoft.Bot.Builder.Resource
+namespace Microsoft.Bot.Builder.FormFlow.Resource
 {
     #region Documentation
     /// <summary>   Extensions for resources. </summary>

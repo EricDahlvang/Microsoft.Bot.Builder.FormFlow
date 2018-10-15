@@ -39,8 +39,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Resource;
-using Microsoft.Bot.Connector;
+using Microsoft.Bot.Builder.FormFlow.Resource;
 using Microsoft.Bot.Schema;
 
 namespace Microsoft.Bot.Builder.FormFlow.Advanced

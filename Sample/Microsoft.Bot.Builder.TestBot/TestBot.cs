@@ -27,9 +27,11 @@ namespace Microsoft.Bot.Builder.TestBot
 			// add the various named dialogs that can be used
 			_dialogs.Add(new MenuDialog());
 			_dialogs.Add(FormDialog.FromForm(Order.BuildOrderForm));
-			_dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
+            _dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
 			_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
-			_dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
+            _dialogs.Add(FormDialog.FromForm(()=>PizzaOrder.BuildForm()));
+            _dialogs.Add(FormDialog.FromForm(ScheduleCallbackDialog.BuildForm));
+            _dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
 		}
 
         public async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
