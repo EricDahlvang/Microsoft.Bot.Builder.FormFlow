@@ -34,15 +34,8 @@ public HotelsDialog() : base(nameof(HotelsDialog))
 After cloning:
 
 - cd Microsoft.Bot.Builder.FormFLow
-- git submodule init
-- git submodule update --recursive --remote
 - Open Microsoft.Bot.Builder.FormFlow.sln
 - Set Microsoft.Bot.Builder.TestBot as StartUp Project
 
-**Remote Dependencies**
 
-  https://github.com/Microsoft/BotBuilder-dotnet
-  
-  https://github.com/EricDahlvang/nChronic/tree/netstandard2.0 
-> (PR submitted: https://github.com/robertwilczynski/nChronic/pull/31 )
 
