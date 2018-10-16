@@ -31,6 +31,7 @@ namespace Microsoft.Bot.Builder.TestBot
 			_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
             _dialogs.Add(FormDialog.FromForm(()=>PizzaOrder.BuildForm()));
             _dialogs.Add(FormDialog.FromForm(ScheduleCallbackDialog.BuildForm));
+            _dialogs.Add(FormDialog.FromForm(ImagesForm.BuildForm));
             _dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
 		}
 

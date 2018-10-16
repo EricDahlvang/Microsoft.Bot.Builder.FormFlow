@@ -41,6 +41,7 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
                            GetMenuOption("Builder Sandwich", nameof(BuilderSandwich)),
                            GetMenuOption("Pizza Order", nameof(PizzaOrder)),
                            GetMenuOption("Process Order", nameof(Order)),
+                           GetMenuOption("Upload Images", nameof(ImagesForm)),
                            GetMenuOption("Schedule Callback", nameof(ScheduleCallbackDialog)),
                         }
             };

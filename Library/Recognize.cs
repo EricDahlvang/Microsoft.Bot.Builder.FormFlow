@@ -744,18 +744,34 @@ namespace Microsoft.Bot.Builder.FormFlow.Advanced
                 List<Dictionary<string, string>> allValues = (List<Dictionary<string, string>>)results[0].Resolution["values"];
                 if (allValues.Count > 0)
                 {
-                    Dictionary<string,string> values = allValues.FirstOrDefault(v => v.Keys.Contains("value"));
-                    if (values != null && values.Count > 0)
+                    // todo: currently defaulting to the greatest date returned from DateTimeRecognizer
+                    DateTime? greatestDate = null;
+                    foreach (var resultValue in allValues)
                     {
                         string value = null;
-                        if (values.TryGetValue("value", out value))
+                        if (resultValue.TryGetValue("value", out value))
                         {
-                            DateTime asDateTime ;
+                            DateTime asDateTime;
                             if (DateTime.TryParse(value, out asDateTime))
                             {
-                                match = new TermMatch(0, input.Length, 1.0, asDateTime);
+                                if (greatestDate.HasValue)
+                                {
+                                    if (greatestDate.Value.CompareTo(asDateTime) < 0)
+                                    {
+                                        greatestDate = asDateTime;
+                                    }
+                                }
+                                else
+                                {
+                                    greatestDate = asDateTime;
+                                }
                             }
                         }
+                    }
+
+                    if (greatestDate.HasValue)
+                    {
+                        match = new TermMatch(0, input.Length, 1.0, greatestDate.Value);
                     }
                 }
             }
