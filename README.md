@@ -1,6 +1,8 @@
-# Microsoft.Bot.Builder.FormFlow v4
+# Bot.Builder.Community.FormFlow for Bot Builder v4
 
 Example [Form Flow v4](https://formflowv4sdk2.azurewebsites.net/) bot
+
+![Example Image](/FormFlowV4.PNG)
 
 netstandard2.0 port of https://github.com/Microsoft/BotBuilder-v3/tree/master/CSharp/Library/Microsoft.Bot.Builder/FormFlow
 
