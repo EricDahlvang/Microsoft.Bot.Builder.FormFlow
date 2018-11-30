@@ -1,6 +1,6 @@
 ﻿using AdaptiveCards;
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.FormFlow;
+using Bot.Builder.Community.FormFlow.Advanced;
 using Microsoft.Bot.Schema;
 using System;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.FormFlow;
+using Bot.Builder.Community.FormFlow.Advanced;
 
 namespace Microsoft.Bot.Builder.TestBot.Dialogs
 {
@@ -103,7 +103,7 @@ namespace Microsoft.Bot.Builder.TestBot.Dialogs
     {
         public const string Email = @"[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
-        public const string Phone = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+        public const string Phone = @"((?:\(?[2-9](?(?=1)1[02-9]|(?(?=0)0[1-9]|\d{2}))\)?\D{0,3})(?:\(?[2-9](?(?=1)1[02-9]|\d{2})\)?\D{0,3})\d{4})";
     }
     [Serializable]
     public class Bouquet

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.FormFlow;
+using Bot.Builder.Community.FormFlow.Advanced;
 #pragma warning disable 649
 
 namespace Microsoft.Bot.Builder.TestBot.Dialogs

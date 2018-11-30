@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Bot.Builder.FormFlow;
+using Bot.Builder.Community.FormFlow;
 #pragma warning disable 649
 
 //from https://github.com/Microsoft/BotBuilder/blob/master/CSharp/Samples/SimpleSandwichBot/Sandwich.cs
