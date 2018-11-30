@@ -38,7 +38,7 @@
 	</PropertyGroup>
   
 	<PropertyGroup>
-	  <CodeAnalysisRuleSet>Microsoft.Bot.Builder.FormFlow.ruleset</CodeAnalysisRuleSet>
+	  <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
 	  <Version>4.0.0</Version>
 	</PropertyGroup>
   
@@ -48,12 +48,12 @@
 
 	<ItemGroup>
     <PackageReference Include="AsyncUsageAnalyzers" Version="1.0.0-alpha003" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.0.7" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.0.7" />
-    <PackageReference Include="Microsoft.Recognizers.Text" Version="1.1.1" />
-		<PackageReference Include="Microsoft.Recognizers.Text.Choice" Version="1.1.0" />
-		<PackageReference Include="Microsoft.Recognizers.Text.DataTypes.TimexExpression" Version="1.1.1" />
-		<PackageReference Include="Microsoft.Recognizers.Text.DateTime" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.1.5" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.1.5" />
+    <PackageReference Include="Microsoft.Recognizers.Text" Version="1.1.3" />
+		<PackageReference Include="Microsoft.Recognizers.Text.Choice" Version="1.1.3" />
+		<PackageReference Include="Microsoft.Recognizers.Text.DataTypes.TimexExpression" Version="1.1.3" />
+		<PackageReference Include="Microsoft.Recognizers.Text.DateTime" Version="1.1.3" />
 		<PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.1" />
 		<PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta008" PrivateAssets="all" />
 	</ItemGroup>
