@@ -9,12 +9,19 @@
 namespace Microsoft.Bot.Builder.Luis.Models
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json.Linq;
+
+    [Serializable]
+    public partial class EntityRecommendation
+    {
+    }
+
+    [Serializable]
+    public partial class IntentRecommendation
+    {
+    }
 
     /// <summary>
     /// Luis entity recommendation. Look at https://www.luis.ai/Help for more

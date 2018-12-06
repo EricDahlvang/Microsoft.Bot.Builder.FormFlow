@@ -883,17 +883,3 @@ namespace Bot.Builder.Community.Dialogs.FormFlow
     }
 }
 
-namespace Microsoft.Bot.Builder.Luis.Models
-{
-    [Serializable]
-    public partial class EntityRecommendation
-    {
-    }
-
-    [Serializable]
-    public partial class IntentRecommendation
-    {
-    }
-}
-
-

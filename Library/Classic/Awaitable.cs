@@ -34,20 +34,16 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.Bot.Builder.Internals.Fibers
+namespace Microsoft.Bot.Builder.Dialogs
 {
+    using System.Threading.Tasks;
+
     public interface IAwaiter<out T> : INotifyCompletion
     {
         bool IsCompleted { get; }
 
         T GetResult();
     }
-}
-
-namespace Microsoft.Bot.Builder.Dialogs
-{
-    using System.Threading.Tasks;
-    using Microsoft.Bot.Builder.Internals.Fibers;
 
     /// <summary>
     /// Explicit interface to support the compiling of async/await.
@@ -59,7 +55,7 @@ namespace Microsoft.Bot.Builder.Dialogs
         /// Get the awaiter for this awaitable item.
         /// </summary>
         /// <returns>The awaiter.</returns>
-        Builder.Internals.Fibers.IAwaiter<T> GetAwaiter();
+        IAwaiter<T> GetAwaiter();
     }
 
     /// <summary>
