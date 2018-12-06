@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System;
 
-namespace Microsoft.Bot.Builder.TestBot.Models
+namespace FormFlow_Sample.Models
 {
     [Serializable]
     public class Hotel

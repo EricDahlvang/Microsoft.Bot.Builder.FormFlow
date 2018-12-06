@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Bot.Builder.Community.Dialogs.FormFlow;
-using Microsoft.Bot.Builder.TestBot.Dialogs;
 using Microsoft.Bot.Schema;
-using Microsoft.Recognizers.Text;
+using FormFlow_Sample.Dialogs;
+using Microsoft.Bot.Builder;
 
-namespace Microsoft.Bot.Builder.TestBot
+namespace FormFlow_Sample
 {
 	public class TestBot : IBot
 	{

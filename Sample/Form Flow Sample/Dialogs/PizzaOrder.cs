@@ -1,13 +1,13 @@
 ﻿using Bot.Builder.Community.Dialogs.FormFlow;
 using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 using Bot.Builder.Community.Dialogs.FormFlow.Resource;
-using Microsoft.Bot.Builder.TestBot.Resource;
+using FormFlow_Sample.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     //from https://github.com/EricDahlvang/BotBuilder-V3/blob/master/CSharp/Tests/FormTest/pizza.cs
 

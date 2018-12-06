@@ -3,7 +3,7 @@
 using Bot.Builder.Community.Dialogs.FormFlow;
 using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     /// from:  https://github.com/Microsoft/BotBuilder-Samples/blob/6c3d09c92ebeaf12ee7597a11bb09ac6e2fca6e5/CSharp/demo-ContosoFlowers/ContosoFlowers/Models/Order.cs
     [Serializable]

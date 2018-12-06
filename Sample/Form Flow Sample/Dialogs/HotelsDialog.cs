@@ -9,9 +9,9 @@ using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 using Bot.Builder.Community.Dialogs.FormFlow;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Builder.TestBot.Models;
+using FormFlow_Sample.Models;
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     /// <summary>
     /// Ported from: https://github.com/Microsoft/BotBuilder-Samples/blob/6c3d09c92ebeaf12ee7597a11bb09ac6e2fca6e5/CSharp/core-MultiDialogs/Dialogs/HotelsDialog.cs

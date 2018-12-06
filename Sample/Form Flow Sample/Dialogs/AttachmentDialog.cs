@@ -8,7 +8,7 @@ using Bot.Builder.Community.Dialogs.FormFlow;
 using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     // from: https://github.com/Microsoft/BotBuilder-V3/blob/master/CSharp/Samples/Microsoft.Bot.Sample.FormFlowAttachmentsBot/ImagesForm.cs
 

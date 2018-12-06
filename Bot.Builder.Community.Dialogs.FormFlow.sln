@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot.Builder.Community.Dialogs.FormFlow", "Library\Bot.Builder.Community.Dialogs.FormFlow.csproj", "{BD402D58-5007-4E2A-9114-2EAA33BD5C38}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Builder.TestBot", "Sample\Form Flow Sample\Microsoft.Bot.Builder.TestBot.csproj", "{BF92D908-5C75-4B58-B288-B3A079F26B14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Form Flow Sample", "Sample\Form Flow Sample\Form Flow Sample.csproj", "{BF92D908-5C75-4B58-B288-B3A079F26B14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,8 +13,9 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.Bot.Builder;
 
-namespace Microsoft.Bot.Builder.TestBot
+namespace FormFlow_Sample
 {
     public class Startup
     {

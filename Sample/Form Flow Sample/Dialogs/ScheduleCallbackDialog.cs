@@ -4,7 +4,7 @@ using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 using Microsoft.Bot.Schema;
 using System;
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     public class ScheduleCallbackDialog
     {

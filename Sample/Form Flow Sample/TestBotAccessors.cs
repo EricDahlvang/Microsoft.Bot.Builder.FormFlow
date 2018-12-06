@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace Microsoft.Bot.Builder.TestBot
+namespace FormFlow_Sample
 {
     public class TestBotAccessors
     {

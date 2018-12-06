@@ -9,7 +9,7 @@ using Bot.Builder.Community.Dialogs.FormFlow;
 // The order of fields defines the default order in which questions will be asked.
 // Enumerations shows the valid options for each field in the SandwichOrder and the order is the sequence the values 
 // will be presented in the conversation.
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     public enum SandwichOptions
     {

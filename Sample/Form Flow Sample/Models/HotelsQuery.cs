@@ -3,7 +3,7 @@
 using System;
 using Bot.Builder.Community.Dialogs.FormFlow;
 
-namespace Microsoft.Bot.Builder.TestBot.Models
+namespace FormFlow_Sample.Models
 {
     [Serializable]
     public class HotelsQuery

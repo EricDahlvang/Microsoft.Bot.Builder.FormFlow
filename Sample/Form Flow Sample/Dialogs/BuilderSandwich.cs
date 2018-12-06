@@ -5,7 +5,7 @@ using Bot.Builder.Community.Dialogs.FormFlow;
 using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 #pragma warning disable 649
 
-namespace Microsoft.Bot.Builder.TestBot.Dialogs
+namespace FormFlow_Sample.Dialogs
 {
     //https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-formflow-formbuilder?view=azure-bot-service-3.0
 
