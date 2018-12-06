@@ -49,7 +49,7 @@ using Microsoft.Recognizers.Text;
 using Microsoft.Recognizers.Text.DateTime;
 using static Microsoft.Recognizers.Text.Culture;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     /// <summary>
     /// Recognizer for enumerated values.

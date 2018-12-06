@@ -1,6 +1,6 @@
-﻿using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
-using Microsoft.Bot.Builder.FormFlow.Resource;
+﻿using Bot.Builder.Community.Dialogs.FormFlow;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Resource;
 using Microsoft.Bot.Builder.TestBot.Resource;
 using System;
 using System.Collections.Generic;

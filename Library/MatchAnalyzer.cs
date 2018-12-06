@@ -35,7 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     internal class MatchAnalyzer
     {

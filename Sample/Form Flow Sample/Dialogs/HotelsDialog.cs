@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow;
+using Bot.Builder.Community.Dialogs.FormFlow;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.TestBot.Models;
 

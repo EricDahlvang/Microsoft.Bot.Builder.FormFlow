@@ -36,9 +36,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     /// <summary>
     /// A delegate for testing a form state to see if a particular step is active.

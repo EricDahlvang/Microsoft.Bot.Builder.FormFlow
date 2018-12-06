@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     /// <summary>
     /// Enumeration of special kinds of matches.

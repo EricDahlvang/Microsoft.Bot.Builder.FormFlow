@@ -38,7 +38,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     #region Documentation
     /// <summary>   Define field delegate. </summary>

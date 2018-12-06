@@ -41,7 +41,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     internal class FieldStep<T> : IStep<T>
         where T : class

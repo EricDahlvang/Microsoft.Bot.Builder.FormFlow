@@ -40,15 +40,14 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 using Microsoft.Bot.Builder.Internals.Fibers;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     /// <summary>
     /// Static factory methods for creating form dialogs.

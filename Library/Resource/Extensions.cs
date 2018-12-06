@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Bot.Builder.FormFlow.Resource
+namespace Bot.Builder.Community.Dialogs.FormFlow.Resource
 {
     #region Documentation
     /// <summary>   Extensions for resources. </summary>

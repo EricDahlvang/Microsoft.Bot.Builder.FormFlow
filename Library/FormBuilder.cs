@@ -42,10 +42,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
-using Microsoft.Bot.Builder.FormFlow.Resource;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Resource;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     #region Documentation
     /// <summary>Abstract base class for Form Builders.</summary>

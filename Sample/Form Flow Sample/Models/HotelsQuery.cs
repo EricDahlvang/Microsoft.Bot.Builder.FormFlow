@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using Microsoft.Bot.Builder.FormFlow;
+using Bot.Builder.Community.Dialogs.FormFlow;
 
 namespace Microsoft.Bot.Builder.TestBot.Models
 {

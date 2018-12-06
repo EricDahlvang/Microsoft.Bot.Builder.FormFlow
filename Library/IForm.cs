@@ -37,9 +37,9 @@ using System.Resources;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     #region Documentation
     /// <summary>   Form definition interface. </summary>

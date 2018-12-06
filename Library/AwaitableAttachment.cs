@@ -45,7 +45,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     [Serializable]
     public class AwaitableAttachment : IAwaitable<Stream>, IAwaiter<Stream>, ISerializable

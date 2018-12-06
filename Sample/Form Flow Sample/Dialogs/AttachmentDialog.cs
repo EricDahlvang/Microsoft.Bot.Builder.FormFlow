@@ -4,8 +4,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 using Microsoft.Bot.Schema;
 
 namespace Microsoft.Bot.Builder.TestBot.Dialogs

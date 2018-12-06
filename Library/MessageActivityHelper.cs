@@ -37,7 +37,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     internal class MessageActivityHelper
     {

@@ -38,7 +38,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     public enum StepPhase { Ready, Responding, Completed };
 	public enum StepType { Field, Confirm, Navigation, Message };

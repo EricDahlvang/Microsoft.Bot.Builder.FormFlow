@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Microsoft.Bot.Builder.FormFlow;
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 
 namespace Microsoft.Bot.Builder.TestBot.Dialogs
 {

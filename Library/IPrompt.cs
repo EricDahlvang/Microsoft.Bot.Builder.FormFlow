@@ -39,10 +39,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow.Resource;
+using Bot.Builder.Community.Dialogs.FormFlow.Resource;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
 
     /// <summary>

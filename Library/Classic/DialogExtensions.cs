@@ -2,7 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     public static class DialogExtensions
     {

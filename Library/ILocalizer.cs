@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Resources;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     #region Documentation
     /// <summary>   Interface for localizing string resources. </summary>

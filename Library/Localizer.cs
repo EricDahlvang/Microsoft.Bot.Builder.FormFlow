@@ -38,9 +38,9 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 
-using static Microsoft.Bot.Builder.FormFlow.Resource.Extensions;
+using static Bot.Builder.Community.Dialogs.FormFlow.Resource.Extensions;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     #region Documentation
     /// <summary>   A resource localizer. </summary>

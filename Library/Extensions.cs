@@ -39,7 +39,7 @@ using System.Linq;
 
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     public static partial class Extensions
     {

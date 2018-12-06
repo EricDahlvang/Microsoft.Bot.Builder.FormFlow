@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Bot.Builder.FormFlow.Resource {
+namespace Bot.Builder.Community.Dialogs.FormFlow.Resource {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.Bot.Builder.FormFlow.Resource {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.Bot.Builder.FormFlow.Resource.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Bot.Builder.Community.Dialogs.FormFlow.Resource.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

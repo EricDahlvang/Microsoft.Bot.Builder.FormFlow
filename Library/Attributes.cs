@@ -35,11 +35,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Microsoft.Bot.Builder.FormFlow.Advanced;
-using Microsoft.Bot.Builder.FormFlow.Resource;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Resource;
 using Microsoft.Bot.Schema;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     /// <summary>
     /// Abstract base class for FormFlow attributes.
@@ -753,7 +753,7 @@ namespace Microsoft.Bot.Builder.FormFlow
     }
 }
 
-namespace Microsoft.Bot.Builder.FormFlow.Advanced
+namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
 {
     /// <summary>
     /// Abstract base class used by all attributes that use \ref patterns.

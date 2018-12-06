@@ -34,9 +34,9 @@
 using System;
 using System.Collections.Generic;
 
-using Microsoft.Bot.Builder.FormFlow.Advanced;
+using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
 
-namespace Microsoft.Bot.Builder.FormFlow
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     [Serializable]
     public class FormState
