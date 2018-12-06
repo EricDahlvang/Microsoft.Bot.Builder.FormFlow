@@ -4,10 +4,10 @@
   "secretKey": "",
   "services": [
     {
-      "appId": "[MicrosoftAppId]",
+      "appId": "",
       "id": "FormFlowV4SDK",
       "type": "endpoint",
-      "appPassword": "[MicrosoftAppPassword]",
+      "appPassword": "",
       "endpoint": "http://localhost:51135/api/messages",
       "name": "development"
     },
