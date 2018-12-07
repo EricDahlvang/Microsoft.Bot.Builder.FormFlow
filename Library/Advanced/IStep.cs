@@ -35,7 +35,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 
 namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced

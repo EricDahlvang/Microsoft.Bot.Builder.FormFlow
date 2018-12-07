@@ -39,7 +39,7 @@ namespace FormFlow_Sample.Resource {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.Bot.Builder.TestBot.Resource.DynamicPizza", typeof(DynamicPizza).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Form Flow Sample.Resource.DynamicPizza", typeof(DynamicPizza).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Bot.Builder.Community.Dialogs.FormFlow;
@@ -29,7 +26,7 @@ namespace FormFlow_Sample
 			_dialogs.Add(FormDialog.FromForm(Order.BuildOrderForm));
             _dialogs.Add(FormDialog.FromForm(SandwichOrder.BuildForm));
 			_dialogs.Add(FormDialog.FromForm(BuilderSandwich.BuildForm));
-            _dialogs.Add(FormDialog.FromForm(()=>PizzaOrder.BuildForm()));
+            _dialogs.Add(FormDialog.FromForm(()=>PizzaOrder.BuildForm(localize: true)));
             _dialogs.Add(FormDialog.FromForm(ScheduleCallbackDialog.BuildForm));
             _dialogs.Add(FormDialog.FromForm(ImagesForm.BuildForm));
             _dialogs.Add(new HotelsDialog()); //<--loads a FormFlow dialog and does processing with the results
@@ -37,6 +34,11 @@ namespace FormFlow_Sample
 
         public async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var name = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
+            var test = new global::System.Resources.ResourceManager("Form Flow Sample.Resource.DynamicPizza", typeof(Resource.DynamicPizza).Assembly);
+
+            //turnContext.Activity.Locale = Microsoft.Recognizers.Text.Culture.English;
             // We only want to pump one activity at a time through the state.
             // Note the state is shared across all instances of this IBot class so we
             // create the semaphore globally with the accessors.

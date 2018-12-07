@@ -42,9 +42,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Bot.Builder.Community.Dialogs.FormFlow.Advanced;
-using Microsoft.Bot.Builder.Internals.Fibers;
-using Microsoft.Bot.Builder.Luis.Models;
-using Microsoft.Bot.Connector;
+using Bot.Builder.Community.Dialogs.FormFlow.Internals.Fibers;
+using Bot.Builder.Community.Dialogs.FormFlow.Luis.Models;
 using Microsoft.Bot.Schema;
 
 namespace Bot.Builder.Community.Dialogs.FormFlow

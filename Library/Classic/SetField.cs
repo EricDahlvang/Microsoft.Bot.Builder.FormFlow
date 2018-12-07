@@ -34,7 +34,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Microsoft.Bot.Builder.Internals.Fibers
+namespace Bot.Builder.Community.Dialogs.FormFlow.Internals.Fibers
 {
     public static partial class SetField
     {

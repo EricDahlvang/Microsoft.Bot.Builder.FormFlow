@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Bot.Builder.Luis.Models
+namespace Bot.Builder.Community.Dialogs.FormFlow.Luis.Models
 {
     using System;
     using System.Collections.Generic;

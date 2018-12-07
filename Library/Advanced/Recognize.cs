@@ -36,14 +36,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Recognizers.Text;
 using Microsoft.Recognizers.Text.DateTime;
@@ -744,7 +740,8 @@ namespace Bot.Builder.Community.Dialogs.FormFlow.Advanced
                 List<Dictionary<string, string>> allValues = (List<Dictionary<string, string>>)results[0].Resolution["values"];
                 if (allValues.Count > 0)
                 {
-                    // todo: currently defaulting to the greatest date returned from DateTimeRecognizer
+                    // TODO: currently defaulting to the greatest date returned from DateTimeRecognizer
+                    // should have constraint attributes for DateTime fields, enabling constraining the recognizer
                     DateTime? greatestDate = null;
                     foreach (var resultValue in allValues)
                     {

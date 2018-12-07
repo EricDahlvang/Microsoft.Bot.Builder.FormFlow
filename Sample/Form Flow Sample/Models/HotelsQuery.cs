@@ -1,6 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-using System;
+﻿using System;
 using Bot.Builder.Community.Dialogs.FormFlow;
 
 namespace FormFlow_Sample.Models

@@ -34,7 +34,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.Bot.Builder.Dialogs
+namespace Bot.Builder.Community.Dialogs.FormFlow
 {
     using System.Threading.Tasks;
 

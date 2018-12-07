@@ -39,9 +39,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Internals.Fibers;
-using Microsoft.Bot.Connector;
+using Bot.Builder.Community.Dialogs.FormFlow.Internals.Fibers;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 

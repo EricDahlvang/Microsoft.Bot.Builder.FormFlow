@@ -71,7 +71,7 @@ namespace Microsoft.Bot.Builder.Dialogs.Internals
     }
 }
 
-namespace Microsoft.Bot.Builder.Internals.Fibers
+namespace Bot.Builder.Community.Dialogs.FormFlow.Internals.Fibers
 {
     public static partial class Extensions
     {

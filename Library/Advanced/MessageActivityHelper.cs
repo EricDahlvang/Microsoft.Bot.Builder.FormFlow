@@ -31,7 +31,6 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using System.Globalization;
 using System.Linq;

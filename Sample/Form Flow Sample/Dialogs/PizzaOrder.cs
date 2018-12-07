@@ -4,8 +4,11 @@ using Bot.Builder.Community.Dialogs.FormFlow.Resource;
 using FormFlow_Sample.Resource;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace FormFlow_Sample.Dialogs
 {
@@ -331,14 +334,15 @@ namespace FormFlow_Sample.Dialogs
                 .Confirm("Would you like a {Size}, {&Stuffed} {Stuffed} pizza delivered to {DeliveryAddress}?", isStuffed)
                 .OnCompletion(async (session, pizza) => Console.WriteLine("{0}", pizza))
                 .Build();
+            //TODO: fix formflow localization
             //if (localize)
             //{
             //    using (var stream = new FileStream(".\\Resource\\DynamicPizza." + Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName + ".resx", FileMode.Open, FileAccess.Read))
-            //    using (var reader = new ResourceReader(stream))
+            //    using (var reader = new System.Resources.ResourceReader(stream))
             //    {
             //        IEnumerable<string> missing, extra;
             //        form.Localize(reader.GetEnumerator(), out missing, out extra);
-            //    }            
+            //    }
             //}
             return form;
         }
